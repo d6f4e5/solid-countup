@@ -1,28 +1,36 @@
-import type { Component } from 'solid-js'
-import logo from './logo.svg'
+import { createSignal, type Component } from 'solid-js'
 import styles from './App.module.css'
-import { Hello } from 'src'
+import CountUp from 'src'
 
 const App: Component = () => {
+  const [value, setValue] = createSignal(99999)
+  let ref;
+
   return (
     <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <h1>
-          <Hello></Hello>
-        </h1>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
-      </header>
+      {/* <p id='test'></p> */}
+      <p>
+        <CountUp
+          class="countup"
+          // useGrouping={true}
+          // separator="A"
+          // decimal="B"
+          // locale="en-IN"
+          // decimalPlaces={3}
+          // duration={10}
+          endVal={value()}
+          ref={ref}
+          useEasing={false}
+          onComplete={() => console.log("done")}
+        />
+        <br></br>
+        <button onClick={() => ref.start()}>Start</button>
+        <button onClick={() => ref.pause()}>Pause</button>
+        <button onClick={() => ref.resume()}>Resume</button>
+        <button onClick={() => ref.toggle()}>Toggle</button>
+        <button onClick={() => ref.reset()}>Reset</button>
+        <button onClick={() => ref.update(-100)}>Set to 9</button>
+      </p>
     </div>
   )
 }
