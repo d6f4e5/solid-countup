@@ -66,7 +66,7 @@ const CountUp: Component<CountUpProps> = props => {
   }
 
   const format = (n: number, prefix: string, suffix: string): JSXElement => {
-    const r = NumberFormat.formatToParts(n)
+    const r = NumberFormat().formatToParts(n)
 
     let s = ''
 
@@ -137,12 +137,14 @@ const CountUp: Component<CountUpProps> = props => {
       : window.matchMedia('(prefers-reduced-motion: reduce)')
   const skip = p.reducedMotion === 'always' || (p.reducedMotion === 'user' && !!mq?.matches)
 
-  const NumberFormat = new Intl.NumberFormat(p.locale, {
-    ...p.intlNumberFormatConfig,
-    minimumFractionDigits: clamp(p.decimalPlaces, 0, 100),
-    maximumFractionDigits: clamp(p.decimalPlaces, 0, 100),
-    useGrouping: p.useGrouping,
-  })
+  const NumberFormat = createMemo(() =>
+    new Intl.NumberFormat(p.locale, {
+      ...p.intlNumberFormatConfig,
+      minimumFractionDigits: clamp(p.decimalPlaces, 0, 100),
+      maximumFractionDigits: clamp(p.decimalPlaces, 0, 100),
+      useGrouping: p.useGrouping,
+    }),
+  )
 
   // For SSR purposes
   const [value, setValue] = createSignal(endVal)
