@@ -14,7 +14,9 @@
     "url": "https://gitlab.com/d6f4e5/solid-countup/issues"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "private": false,
   "sideEffects": false,
