@@ -1,8 +1,9 @@
-import { createContext, mergeProps, useContext } from "solid-js";
+import { createContext, mergeProps, useContext, type ParentComponent } from "solid-js";
+import type { CountUpProps } from "./index";
 
-const CountUpConfigContext = createContext({})
+const CountUpConfigContext = createContext<Partial<CountUpProps>>({})
 
-const CountUpDefaults = props => {
+const CountUpDefaults: ParentComponent<{ value: Partial<CountUpProps> }> = props => {
     const parent = useContext(CountUpConfigContext)
     const merged = mergeProps(parent, props.value)
 

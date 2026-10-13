@@ -39,7 +39,8 @@ interface CountUpProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'ref'> 
   autoAnimateDelay?: number
   autoAnimateOnce?: boolean
   reducedMotion?: 'user' | 'always' | 'never'
-  intlNumberFormatConfig?: Object
+  // merged into new Intl.NumberFormat(...); decimalPlaces overrides its min/max fraction digits
+  intlNumberFormatConfig?: Intl.NumberFormatOptions
 }
 
 interface CountUpHandle {
