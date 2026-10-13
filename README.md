@@ -16,10 +16,10 @@ props reactively, and formats through `Intl.NumberFormat`.
 ```tsx
 import CountUp from 'solid-countup'
 
-<CountUp endVal={5234} />
+<CountUp endVal={5234} autoAnimate />
 ```
 
-renders `5,234`.
+starts at `0` and counts up to `5,234` once it scrolls into view.
 
 - [Install](#install)
 - [Quick start](#quick-start)
@@ -52,19 +52,34 @@ yarn add solid-countup
 
 ## Quick start
 
+`CountUp` renders its `startVal` and holds it until the animation is started. Start it when it
+scrolls into view:
+
 ```tsx
 import { render } from 'solid-js/web'
 import CountUp from 'solid-countup'
 
-render(() => <CountUp endVal={5234} />, document.body)
+render(() => <CountUp endVal={5234} autoAnimate />, document.body)
 ```
 
-This counts up from `0` to `5,234` over 2 seconds and leaves the final value in the DOM.
+or start it yourself through the [control handle](#control-handle):
+
+```tsx
+import { CountUp, type CountUpHandle } from 'solid-countup'
+
+let handle: CountUpHandle | undefined
+
+<CountUp endVal={5234} ref={h => (handle = h)} />
+<button onClick={() => handle?.start()}>Start</button>
+```
+
+Either way, it animates from `0` to `5,234` over 2 seconds and leaves the final value in the DOM.
 
 ## What the output looks like
 
-Output below assumes an `en-US` runtime locale; pass `locale` to pin it. (Currency is the one that
-diverges visibly — under `en-CA` the same example renders `US$1,234.50`.)
+Each row shows the value after the animation has run to completion. Output assumes an `en-US` runtime
+locale; pass `locale` to pin it. (Currency is the one that diverges visibly — under `en-CA` the same
+example renders `US$1,234.50`.)
 
 | Code | Renders |
 | --- | --- |
@@ -212,8 +227,8 @@ import { For } from 'solid-js'
 
 ## Server-side rendering
 
-On the server the component renders the **final** value — no flash of `0`, no hydration mismatch, no
-layout shift:
+On the server the component renders the **final** value, so the first paint never shows `0` and
+hydration cannot disagree:
 
 ```tsx
 import { renderToString } from 'solid-js/web'
@@ -224,7 +239,9 @@ renderToString(() => <CountUp endVal={5234} />)
 ```
 
 Nothing touches `window`, `document`, `requestAnimationFrame`, `IntersectionObserver` or `matchMedia`
-during SSR. The animation begins on the client, in `onMount`.
+during SSR. The first client render matches the server output, so hydration cannot disagree. `onMount`
+then rewinds the display to `startVal` (unless motion is skipped), ready for the animation to be
+started.
 
 ## Accessibility
 

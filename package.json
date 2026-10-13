@@ -1,7 +1,7 @@
 {
   "name": "solid-countup",
-  "version": "0.0.0",
-  "description": "A solidjs version of countup.js",
+  "version": "1.0.0",
+  "description": "A Solid component that animates a number from one value to another — a take on CountUp.js that renders declaratively, follows props reactively, and formats through Intl.NumberFormat.",
   "license": "MIT",
   "author": "d6f4e5",
   "contributors": [],
@@ -91,7 +91,14 @@
     "vitest": "^1.6.0"
   },
   "keywords": [
-    "solid"
+    "solid-js",
+    "solidjs",
+    "countup",
+    "count-up",
+    "counter",
+    "animation",
+    "number",
+    "intl"
   ],
   "packageManager": "pnpm@9.1.1",
   "engines": {
