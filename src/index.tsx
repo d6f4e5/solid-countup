@@ -6,8 +6,14 @@ import {
   onMount,
   JSX,
   createMemo,
-  onCleanup
+  onCleanup,
+  useContext,
+  createEffect,
+  on,
+  JSXElement,
 } from 'solid-js'
+
+import { CountUpConfigContext, CountUpDefaults } from './context'
 
 interface CountUpProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'ref'> {
   startVal?: number
@@ -23,7 +29,7 @@ interface CountUpProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'ref'> 
   suffix?: string
   separator?: string
   decimal?: string
-  formattingFn?: (value: number, prefix: string, suffix: string) => string
+  formattingFn?: (value: number, prefix: string, suffix: string) => JSXElement
   ref?: (handle: CountUpHandle) => void
   onStart?: () => void
   onComplete?: (endVal: number) => void
@@ -32,6 +38,8 @@ interface CountUpProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'ref'> 
   autoAnimateThreshold?: number
   autoAnimateDelay?: number
   autoAnimateOnce?: boolean
+  reducedMotion?: 'user' | 'always' | 'never'
+  intlNumberFormatConfig?: Object
 }
 
 interface CountUpHandle {
@@ -44,6 +52,8 @@ interface CountUpHandle {
 }
 
 const CountUp: Component<CountUpProps> = props => {
+  const config = useContext(CountUpConfigContext)
+
   const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max)
 
   const curve = (progress: number): number => {
@@ -54,12 +64,8 @@ const CountUp: Component<CountUpProps> = props => {
     return 1 - Math.pow(1 - progress, 4 + Math.log10(logVal) / 1.8)
   }
 
-  const format = (n: number, prefix: string, suffix: string): string => {
-    const r = new Intl.NumberFormat(p.locale, {
-      minimumFractionDigits: p.decimalPlaces,
-      maximumFractionDigits: p.decimalPlaces,
-      useGrouping: p.useGrouping,
-    }).formatToParts(n)
+  const format = (n: number, prefix: string, suffix: string): JSXElement => {
+    const r = NumberFormat.formatToParts(n)
 
     let s = ''
 
@@ -69,7 +75,7 @@ const CountUp: Component<CountUpProps> = props => {
       else s += e.value
     }
 
-    return `${prefix}${s}${suffix}`
+    return <>{`${prefix}${s}${suffix}`}</>
   }
 
   const propsWithDefault = mergeProps(
@@ -88,7 +94,10 @@ const CountUp: Component<CountUpProps> = props => {
       autoAnimateThreshold: 0,
       autoAnimateDelay: 200,
       autoAnimateOnce: false,
+      reducedMotion: 'user',
+      intlNumberFormatConfig: {},
     },
+    config,
     props,
   )
 
@@ -114,12 +123,28 @@ const CountUp: Component<CountUpProps> = props => {
     'autoAnimateThreshold',
     'autoAnimateDelay',
     'autoAnimateOnce',
+    'reducedMotion',
+    'intlNumberFormatConfig',
   ])
 
   let startVal = p.startVal
   let endVal = p.endVal
 
-  const [value, setValue] = createSignal(p.duration != 0 ? startVal : endVal)
+  const mq =
+    typeof window === 'undefined'
+      ? undefined
+      : window.matchMedia('(prefers-reduced-motion: reduce)')
+  const skip = p.reducedMotion === 'always' || (p.reducedMotion === 'user' && !!mq?.matches)
+
+  const NumberFormat = new Intl.NumberFormat(p.locale, {
+    ...p.intlNumberFormatConfig,
+    minimumFractionDigits: clamp(p.decimalPlaces, 0, 100),
+    maximumFractionDigits: clamp(p.decimalPlaces, 0, 100),
+    useGrouping: p.useGrouping,
+  })
+
+  // For SSR purposes
+  const [value, setValue] = createSignal(endVal)
 
   let rAF: number | undefined
   let timeout: ReturnType<typeof setTimeout> | undefined
@@ -174,7 +199,18 @@ const CountUp: Component<CountUpProps> = props => {
     }
   }
 
+  createEffect(
+    on(
+      () => props.endVal,
+      (v, prev) => {
+        if (prev !== undefined) update(v)
+      },
+    ),
+  )
+
   onMount(() => {
+    if (!skip) reset()
+
     const callback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !hasAnimated) {
@@ -190,7 +226,7 @@ const CountUp: Component<CountUpProps> = props => {
       threshold: p.autoAnimateThreshold,
     })
 
-    if (p.autoAnimate) observer.observe(element)
+    if (p.autoAnimate && !skip) observer.observe(element)
 
     onCleanup(() => {
       observer.disconnect()
@@ -204,6 +240,13 @@ const CountUp: Component<CountUpProps> = props => {
   })
 
   const start = () => {
+    if (skip) {
+      setValue(endVal)
+
+      if (p.onComplete) p.onComplete(endVal)
+      return
+    }
+
     reset()
 
     rAF = requestAnimationFrame(timestamp => {
@@ -218,6 +261,13 @@ const CountUp: Component<CountUpProps> = props => {
   }
 
   const resume = () => {
+    if (skip) {
+      setValue(endVal)
+
+      if (p.onComplete) p.onComplete(endVal)
+      return
+    }
+
     rAF = requestAnimationFrame(timestamp => {
       tick(timestamp - tick_progress, timestamp)
     })
@@ -243,6 +293,13 @@ const CountUp: Component<CountUpProps> = props => {
     cancelFrame()
 
     endVal = n
+    if (skip) {
+      setValue(n)
+
+      if (p.onComplete) p.onComplete(n)
+      return
+    }
+
     startVal = value()
     tick_progress = 0
 
@@ -261,10 +318,12 @@ const CountUp: Component<CountUpProps> = props => {
   props.ref?.(handle)
 
   return (
-    <span ref={element} {...html}>
+    <span ref={element} aria-live="off" {...html}>
       {result()}
     </span>
   )
 }
 
+export { CountUp, CountUpDefaults }
+export type { CountUpProps, CountUpHandle }
 export default CountUp

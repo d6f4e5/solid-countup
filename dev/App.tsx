@@ -20,7 +20,7 @@ const App: Component = () => {
           // duration={10}
           endVal={value()}
           ref={ref}
-          useEasing={false}
+          // useEasing={false}
           onComplete={() => console.log("done")}
         />
         <br></br>
@@ -29,7 +29,8 @@ const App: Component = () => {
         <button onClick={() => ref.resume()}>Resume</button>
         <button onClick={() => ref.toggle()}>Toggle</button>
         <button onClick={() => ref.reset()}>Reset</button>
-        <button onClick={() => ref.update(-100)}>Set to 9</button>
+        <button onClick={() => ref.update(-1000)}>Set to 9</button>
+        <button onClick={() => setValue(-100)}>Set to -100</button>
       </p>
     </div>
   )
