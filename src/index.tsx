@@ -15,6 +15,18 @@ import {
 
 import { CountUpConfigContext, CountUpDefaults } from './context'
 
+// The spec allows up to 100 fraction digits, but V8 before Node 22 (and older
+// browsers) limits `Intl.NumberFormat` to 20 and throws above it. Probe once so an
+// out-of-range `decimalPlaces` is clamped to what this runtime actually accepts.
+const MAX_FRACTION_DIGITS = (() => {
+  try {
+    new Intl.NumberFormat(undefined, { minimumFractionDigits: 100, maximumFractionDigits: 100 })
+    return 100
+  } catch {
+    return 20
+  }
+})()
+
 interface CountUpProps extends Omit<JSX.HTMLAttributes<HTMLSpanElement>, 'ref'> {
   startVal?: number
   // Only required prop
@@ -141,8 +153,8 @@ const CountUp: Component<CountUpProps> = props => {
     () =>
       new Intl.NumberFormat(p.locale, {
         ...p.intlNumberFormatConfig,
-        minimumFractionDigits: clamp(p.decimalPlaces, 0, 100),
-        maximumFractionDigits: clamp(p.decimalPlaces, 0, 100),
+        minimumFractionDigits: clamp(p.decimalPlaces, 0, MAX_FRACTION_DIGITS),
+        maximumFractionDigits: clamp(p.decimalPlaces, 0, MAX_FRACTION_DIGITS),
         useGrouping: p.useGrouping,
       }),
   )

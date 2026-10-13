@@ -89,7 +89,7 @@ diverges visibly — under `en-CA` the same example renders `US$1,234.50`.)
 | `endVal` | `number` | — | **Required.** The target value. |
 | `startVal` | `number` | `0` | The value the animation starts from. |
 | `duration` | `number` | `2` | Duration in **seconds**. `0` prints the final value immediately. |
-| `decimalPlaces` | `number` | `0` | Fraction digits, clamped to `0`–`100`. Drives `Intl`'s min/max fraction digits. |
+| `decimalPlaces` | `number` | `0` | Fraction digits, clamped to `0`–`100` — or the runtime's lower cap (`20` on older engines). Drives `Intl`'s min/max fraction digits. |
 | `useEasing` | `boolean` | `true` | Set `false` for a linear count. |
 | `easingFn` | `(progress: number) => number` | log-scaled ease-out | Receives normalised progress in `[0, 1]` and returns eased progress. Not Penner `(t, b, c, d)`. |
 | `useGrouping` | `boolean` | `true` | Thousands separators. |
