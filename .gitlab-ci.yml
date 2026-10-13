@@ -1,0 +1,42 @@
+# GitLab CI for the GitLab remote (gitlab.com/d6f4e5/solid-countup).
+#
+# This is the pipeline that actually runs for this repo. It covers
+# install -> format:check -> build -> test -> lint, plus the package checks
+# that need a build, and GitLab SAST for source-level security scanning.
+stages:
+  - verify
+  - test
+
+default:
+  image: node:20
+
+variables:
+  # Keep the pnpm store inside the project so the cache on the verify job can
+  # pick it up, and keep pnpm from being clever about a store it cannot write to.
+  PNPM_STORE_DIR: '$CI_PROJECT_DIR/.pnpm-store'
+
+# Source-level security scanning (Semgrep-based analyzer for JS/TS). Available
+# on the Free tier; this template requires the `test` stage defined above.
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
+
+verify:
+  stage: verify
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+    paths:
+      - .pnpm-store
+  before_script:
+    - corepack enable
+    - corepack prepare pnpm@9.1.1 --activate
+    - pnpm config set store-dir "$PNPM_STORE_DIR"
+  script:
+    - pnpm install --frozen-lockfile
+    - pnpm format:check
+    - pnpm build
+    - pnpm test
+    - pnpm lint
+    # publint and attw need dist/ to exist, so they run after the build.
+    - pnpm check:package

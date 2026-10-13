@@ -1,0 +1,4 @@
+# Normalize all text files to LF in the repository and on checkout, so the
+# repository is byte-identical on every platform and the CI `format:check`
+# (Prettier's default `endOfLine: lf`) agrees with local development.
+* text=auto eol=lf

@@ -230,8 +230,8 @@ describe('formatting', () => {
     ).toBe('1.2M')
   })
 
-  it('supports glyph substitution via numberingSystem', () => {
-    expect(render({ endVal: 1000, intlNumberFormatConfig: { numberingSystem: 'deva' } }).text).toBe(
+  it('supports glyph substitution via a Unicode extension', () => {
+    expect(render({ endVal: 1000, locale: 'hi-IN-u-nu-deva' }).text).toBe(
       '१,०००',
     )
   })

@@ -4,7 +4,7 @@ import CountUp from 'src'
 
 const App: Component = () => {
   const [value, setValue] = createSignal(99999)
-  let ref;
+  let ref
 
   return (
     <div class={styles.App}>
@@ -21,7 +21,7 @@ const App: Component = () => {
           endVal={value()}
           ref={ref}
           // useEasing={false}
-          onComplete={() => console.log("done")}
+          onComplete={() => console.log('done')}
         />
         <br></br>
         <button onClick={() => ref.start()}>Start</button>

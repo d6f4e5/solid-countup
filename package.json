@@ -19,7 +19,7 @@
   "private": false,
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "browser": {},
@@ -32,11 +32,19 @@
       "import": {
         "types": "./dist/index.d.ts",
         "default": "./dist/dev.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/dev.cjs"
       }
     },
     "import": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "require": {
+      "types": "./dist/index.d.cts",
+      "default": "./dist/index.cjs"
     }
   },
   "typesVersions": {},
@@ -48,15 +56,18 @@
     "test:ssr": "pnpm run test:client --mode ssr",
     "prepublishOnly": "pnpm build",
     "format": "prettier --ignore-path .gitignore -w \"src/**/*.{js,ts,json,css,tsx,jsx}\" \"dev/**/*.{js,ts,json,css,tsx,jsx}\"",
+    "format:check": "prettier --ignore-path .gitignore -c \"src/**/*.{js,ts,json,css,tsx,jsx}\" \"dev/**/*.{js,ts,json,css,tsx,jsx}\"",
     "lint": "concurrently pnpm:lint:*",
     "lint:code": "eslint --ignore-path .gitignore --max-warnings 0 src/**/*.{js,ts,tsx,jsx}",
     "lint:types": "tsc --noEmit",
+    "check:package": "publint && attw --pack .",
     "update-deps": "pnpm up -Li"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@types/node": "^20.12.12",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
@@ -68,6 +79,7 @@
     "eslint-plugin-no-only-tests": "^3.1.0",
     "jsdom": "^24.0.0",
     "prettier": "3.0.0",
+    "publint": "^0.3.25",
     "solid-js": "^1.8.17",
     "tsup": "^8.0.2",
     "tsup-preset-solid": "^2.2.0",
