@@ -28,6 +28,7 @@ pnpm install
 | --- | --- |
 | `pnpm dev` | Vite dev server for the demo in `dev/`. |
 | `pnpm build` | Builds `dist/` with [tsup](https://tsup.egoist.dev/) (ESM + CJS + types). |
+| `pnpm build:demo` | Builds the demo site from `dev/` into `dev/dist/`. This is what the Cloudflare Pages project runs. |
 | `pnpm test` | Runs the client (jsdom) and SSR suites together. |
 | `pnpm test:client` | Vitest against `test/*.test.tsx` in jsdom. |
 | `pnpm test:ssr` | Vitest in `--mode ssr` against the server suite. |
