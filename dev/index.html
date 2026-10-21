@@ -3,6 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // Apply the saved theme before the first paint, otherwise the page flashes the wrong
+      // colours on load. Mirrors dev/theme.ts.
+      try {
+        const stored = localStorage.getItem('solid-countup-theme')
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.dataset.theme = stored
+        }
+      } catch {}
+    </script>
     <title>solid-countup — a Solid component that animates a number</title>
     <meta
       name="description"
@@ -10,6 +20,8 @@
     />
     <link rel="canonical" href="https://solid-countup.d6f4e5.me/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="solid-countup" />

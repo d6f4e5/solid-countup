@@ -9,6 +9,7 @@ import {
 } from 'solid-js'
 import CountUp, { CountUpDefaults, type CountUpHandle } from 'src'
 import styles from './App.module.css'
+import ThemeToggle from './ThemeToggle'
 
 const snippets = {
   install: 'pnpm add solid-countup',
@@ -477,11 +478,14 @@ const App: Component = () => {
         <a class={styles.brand} href="#top">
           solid-countup
         </a>
-        <nav class={styles.nav}>
-          <a href="https://www.npmjs.com/package/solid-countup">npm</a>
-          <a href="https://gitlab.com/d6f4e5/solid-countup">GitLab</a>
-          <a href="https://gitlab.com/d6f4e5/solid-countup/-/blob/main/README.md">Docs</a>
-        </nav>
+        <div class={styles.headerEnd}>
+          <nav class={styles.nav}>
+            <a href="https://www.npmjs.com/package/solid-countup">npm</a>
+            <a href="https://gitlab.com/d6f4e5/solid-countup">GitLab</a>
+            <a href="https://gitlab.com/d6f4e5/solid-countup/-/blob/main/README.md">Docs</a>
+          </nav>
+          <ThemeToggle />
+        </div>
       </header>
 
       <main class={styles.main} id="top">

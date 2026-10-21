@@ -1,13 +1,33 @@
 :root {
-  --bg: #ffffff;
-  --fg: #0b1220;
-  --muted: #5b6472;
-  --border: #e3e8ef;
-  --surface: #f7f9fc;
-  --accent: #2f6fed;
+  /* `color-scheme` tells the UA to follow the browser's preference too, so the page canvas,
+     scrollbars and form controls go dark with everything else. `light-dark()` resolves each
+     token against that scheme, which means the theme toggle only has to override
+     `color-scheme` below instead of redeclaring the palette. Needs light-dark() support
+     (Baseline widely available). */
+  color-scheme: light dark;
+
+  --bg: light-dark(#ffffff, #0b1220);
+  --fg: light-dark(#0b1220, #e6ebf2);
+  --muted: light-dark(#5b6472, #96a0b0);
+  --border: light-dark(#e3e8ef, #202a3a);
+  --surface: light-dark(#f7f9fc, #141c2b);
+  --accent: light-dark(#2f6fed, #7aa5ff);
+  --accent-strong: light-dark(#2459c9, #93b6ff);
+  --on-accent: light-dark(#ffffff, #0b1220);
+  --tint: light-dark(rgba(47, 111, 237, 0.08), rgba(122, 165, 255, 0.14));
+  --code-fg: light-dark(#334155, #cbd5e1);
   --radius: 10px;
   --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+/* An explicit choice from the theme toggle overrides the browser's preference. */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 * {

@@ -3,9 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // Apply the saved theme before the first paint, otherwise the page flashes the wrong
+      // colours on load. Mirrors dev/theme.ts.
+      try {
+        const stored = localStorage.getItem('solid-countup-theme')
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.dataset.theme = stored
+        }
+      } catch {}
+    </script>
     <meta name="robots" content="noindex" />
     <title>Page not found — solid-countup</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this demo.</noscript>

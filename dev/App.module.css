@@ -27,10 +27,35 @@
   text-decoration: none;
 }
 
+.headerEnd {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
 .nav {
   display: flex;
   gap: 1.25rem;
   font-size: 0.9rem;
+}
+
+.themeToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.themeToggle:hover {
+  background: var(--surface);
 }
 
 .main {
@@ -174,7 +199,7 @@
 .code {
   margin: 0;
   padding: 0.9rem 1rem;
-  color: #334155;
+  color: var(--code-fg);
   font-size: 0.8rem;
   line-height: 1.6;
   overflow-x: auto;
@@ -198,7 +223,7 @@
   display: inline-block;
   padding: 0 0.08em;
   border-radius: 3px;
-  background: rgba(47, 111, 237, 0.08);
+  background: var(--tint);
 }
 
 .defaultsRow {
@@ -312,11 +337,11 @@
 .buttonPrimary {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .buttonPrimary:hover {
-  background: #2459c9;
+  background: var(--accent-strong);
 }
 
 .footer {
@@ -334,7 +359,7 @@
   display: inline-block;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  background: rgba(47, 111, 237, 0.1);
+  background: var(--tint);
   color: var(--accent);
   font-size: 1.4rem;
   font-weight: 600;
