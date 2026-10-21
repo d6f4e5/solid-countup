@@ -1,0 +1,45 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 clamp(1rem, 5vw, 2.5rem);
+  text-align: center;
+}
+
+.code {
+  margin: 0;
+  font-size: clamp(4rem, 18vw, 9rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.title {
+  margin: 1.5rem 0 0;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  max-width: 34rem;
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+}
+
+.link {
+  margin-top: 2rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+}
+
+.link:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+}
