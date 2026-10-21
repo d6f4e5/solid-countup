@@ -1,10 +1,11 @@
-import { createSignal, type Component } from 'solid-js'
+import { type Component } from 'solid-js'
 
-import { currentTheme, setTheme, type Theme } from './theme'
+import { currentTheme, setTheme } from './theme'
 import styles from './App.module.css'
 
 const Sun: Component = () => (
   <svg
+    class={styles.iconSun}
     viewBox="0 0 24 24"
     width="16"
     height="16"
@@ -21,6 +22,7 @@ const Sun: Component = () => (
 
 const Moon: Component = () => (
   <svg
+    class={styles.iconMoon}
     viewBox="0 0 24 24"
     width="16"
     height="16"
@@ -35,23 +37,21 @@ const Moon: Component = () => (
   </svg>
 )
 
-/** Toggles between light and dark. With nothing stored yet it follows the browser. */
-const ThemeToggle: Component = () => {
-  const [theme, setSignal] = createSignal<Theme>(currentTheme())
-
-  const toggle = () => {
-    const next: Theme = theme() === 'dark' ? 'light' : 'dark'
-    setTheme(next)
-    setSignal(next)
-  }
-
-  const label = () => (theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme')
-
-  return (
-    <button class={styles.themeToggle} onClick={toggle} aria-label={label()} title={label()}>
-      {theme() === 'dark' ? <Sun /> : <Moon />}
-    </button>
-  )
-}
+/**
+ * Toggles between light and dark. The icon shown is the theme you would switch to, and CSS
+ * picks it from the same selectors the palette uses — so the server-rendered markup carries no
+ * theme state and hydration always matches.
+ */
+const ThemeToggle: Component = () => (
+  <button
+    class={styles.themeToggle}
+    onClick={() => setTheme(currentTheme() === 'dark' ? 'light' : 'dark')}
+    aria-label="Toggle colour theme"
+    title="Toggle colour theme"
+  >
+    <Sun />
+    <Moon />
+  </button>
+)
 
 export default ThemeToggle

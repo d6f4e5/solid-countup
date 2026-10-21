@@ -9,7 +9,9 @@ export default defineConfig({
     },
   },
   plugins: [
-    solidPlugin(),
+    // `ssr: true` lets the same config produce both builds: the client build gets DOM output
+    // marked hydratable, and the SSR build (vite build --ssr) gets the server transform.
+    solidPlugin({ ssr: true }),
     {
       name: 'Replace env variables',
       transform(code, id) {

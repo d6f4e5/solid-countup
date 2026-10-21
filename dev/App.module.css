@@ -58,6 +58,35 @@
   background: var(--surface);
 }
 
+/* The icon shows the theme you would switch to. These selectors mirror the palette's, so the
+   rendered markup does not depend on the current theme. */
+.iconSun,
+.iconMoon {
+  display: none;
+}
+
+.iconMoon {
+  display: inline;
+}
+
+:root[data-theme='dark'] .iconSun {
+  display: inline;
+}
+
+:root[data-theme='dark'] .iconMoon {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .iconSun {
+    display: inline;
+  }
+
+  :root:not([data-theme='light']) .iconMoon {
+    display: none;
+  }
+}
+
 .main {
   flex: 1;
   width: 100%;
