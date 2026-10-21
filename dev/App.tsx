@@ -480,6 +480,7 @@ const App: Component = () => {
         </a>
         <div class={styles.headerEnd}>
           <nav class={styles.nav}>
+            <a href="/about.html">About</a>
             <a href="https://www.npmjs.com/package/solid-countup">npm</a>
             <a href="https://gitlab.com/d6f4e5/solid-countup">GitLab</a>
             <a href="https://gitlab.com/d6f4e5/solid-countup/-/blob/main/README.md">Docs</a>

@@ -1,0 +1,75 @@
+@import './styles.css';
+
+.page {
+  width: 100%;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 5rem) clamp(1rem, 5vw, 2.5rem);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin: 1rem 0 0;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+h2 {
+  margin: 2.5rem 0 0.75rem;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0.75rem 0 0;
+}
+
+.code {
+  margin: 1rem 0 0;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--code-fg);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+dl {
+  margin: 1rem 0 0;
+}
+
+dt {
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+dd {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+ul {
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+}
+
+li {
+  margin: 0.4rem 0 0;
+}

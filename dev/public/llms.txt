@@ -1,0 +1,26 @@
+# solid-countup
+
+> A Solid component that animates a number from one value to another. A take on CountUp.js for
+> Solid, with locale-aware formatting through `Intl.NumberFormat` and no runtime dependencies.
+
+`solid-countup` renders a single `<span>` and animates its text content from one number to
+another. It is a Solid port of CountUp.js, with reactive props and a `ref` handle for driving
+the animation.
+
+Install it with `pnpm add solid-countup`. `solid-js` is a peer dependency (`^1.6.0`).
+
+The component does not animate on mount: it holds `startVal` until you call `start()` through
+its ref, or set `autoAnimate` to start it when the element scrolls into view.
+
+## Usage
+
+- [About](https://solid-countup.d6f4e5.me/about.html): a plain HTML explanation of what the
+  library does, the props it takes, and how to use it. No JavaScript required.
+- [About (markdown)](https://solid-countup.d6f4e5.me/about.md): the same explanation as markdown.
+
+## Project
+
+- [Live demo](https://solid-countup.d6f4e5.me/): every feature, running in the browser.
+- [npm](https://www.npmjs.com/package/solid-countup): the published package, with the full prop
+  table.
+- [Source](https://gitlab.com/d6f4e5/solid-countup): repository, issues and the README.

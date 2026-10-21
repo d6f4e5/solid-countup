@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About — solid-countup</title>
+    <meta
+      name="description"
+      content="solid-countup is a Solid component that animates a number from one value to another, with locale-aware formatting through Intl.NumberFormat."
+    />
+    <link rel="canonical" href="https://solid-countup.d6f4e5.me/about.html" />
+    <link rel="stylesheet" href="./about.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="text/markdown" href="/about.md" />
+    <link rel="describedby" href="/llms.txt" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220" />
+  </head>
+  <body>
+    <main class="page">
+      <p class="eyebrow">About</p>
+      <h1 class="title">solid-countup</h1>
+      <p class="lede">
+        A Solid component that animates a number from one value to another. It renders a single
+        <code>&lt;span&gt;</code>, follows your props reactively, and formats through
+        <code>Intl.NumberFormat</code>.
+      </p>
+
+      <h2>Install</h2>
+      <pre class="code"><code>pnpm add solid-countup</code></pre>
+
+      <h2>Use it</h2>
+      <pre class="code"><code>import CountUp from 'solid-countup'
+
+&lt;CountUp endVal={5234} /&gt;</code></pre>
+      <p>
+        The component renders the number as its text content and animates from
+        <code>startVal</code> to <code>endVal</code> over <code>duration</code> seconds.
+      </p>
+
+      <h2>The props that matter</h2>
+      <dl>
+        <dt><code>endVal</code></dt>
+        <dd>The number to count to. The only required prop.</dd>
+
+        <dt><code>startVal</code></dt>
+        <dd>Where the animation begins. Defaults to <code>0</code>.</dd>
+
+        <dt><code>duration</code></dt>
+        <dd>Length of the animation in seconds. Defaults to <code>2</code>. Use
+          <code>0</code> to write the target immediately, with no animation.</dd>
+
+        <dt><code>autoAnimate</code></dt>
+        <dd>Start when the element scrolls into view, using
+          <code>IntersectionObserver</code>. Defaults to <code>false</code>.</dd>
+
+        <dt><code>locale</code></dt>
+        <dd>A BCP 47 locale for the number format, for example <code>hi-IN-u-nu-deva</code> for
+          Devanagari digits.</dd>
+
+        <dt><code>intlNumberFormatConfig</code></dt>
+        <dd>Passed straight to <code>Intl.NumberFormat</code>, so currency, percent, compact
+          notation and signed values all work.</dd>
+
+        <dt><code>prefix</code> / <code>suffix</code></dt>
+        <dd>Literal text around the number, such as <code>"$"</code> or <code>" USD"</code>.</dd>
+
+        <dt><code>reducedMotion</code></dt>
+        <dd><code>'user'</code> (default), <code>'always'</code> or <code>'never'</code>. When
+          motion is reduced, the final value is written straight away.</dd>
+
+        <dt><code>onStart</code> / <code>onFrame</code> / <code>onComplete</code></dt>
+        <dd>Callbacks for the start of the animation, each frame, and the end.</dd>
+      </dl>
+
+      <h2>What you get</h2>
+      <ul>
+        <li>
+          Locale-aware formatting for free, including currency, percentages, compact notation,
+          non-Latin digits and right-to-left layouts.
+        </li>
+        <li>
+          Server rendering that outputs the final value, so a page never flashes <code>0</code>
+          before the animation starts.
+        </li>
+        <li>Zero runtime dependencies. <code>solid-js</code> is a peer dependency.</li>
+        <li>Any extra attributes — <code>class</code>, <code>id</code>, <code>role</code>,
+          <code>aria-*</code> — land on the rendered <code>&lt;span&gt;</code>.</li>
+      </ul>
+
+      <h2>Links</h2>
+      <ul>
+        <li><a href="https://www.npmjs.com/package/solid-countup">npm</a> — the published package.</li>
+        <li><a href="https://gitlab.com/d6f4e5/solid-countup">GitLab</a> — source, issues and the full README.</li>
+        <li><a href="/">Live demo</a> — every feature, running in the browser.</li>
+        <li><a href="/llms.txt">llms.txt</a> — a plain-text summary for language models.</li>
+      </ul>
+    </main>
+  </body>
+</html>
